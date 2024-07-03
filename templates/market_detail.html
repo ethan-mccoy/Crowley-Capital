@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>{{ market['name'] }}</h2>
+<p>{{ market['short_name'] }}</p>
+<img src="{{ market['image'] }}" alt="{{ market['name'] }}">
+<p><a href="{{ market['url'] }}">Market URL</a></p>
+
+<h3>Contracts</h3>
+<ul>
+    {% for contract in latest_contracts.itertuples() %}
+    <li>
+        <strong>{{ contract.name }}</strong> ({{ contract.short_name }}) - {{ contract.status }}
+        <ul>
+            <li>Last Trade Price: {{ contract.last_trade_price }}</li>
+            <li>Best Buy Yes Cost: {{ contract.best_buy_yes_cost }}</li>
+            <li>Best Buy No Cost: {{ contract.best_buy_no_cost }}</li>
+            <li>Best Sell Yes Cost: {{ contract.best_sell_yes_cost }}</li>
+            <li>Best Sell No Cost: {{ contract.best_sell_no_cost }}</li>
+            <li>Last Close Price: {{ contract.last_close_price }}</li>
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Historical Data</h3>
+<div id="chart"></div>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script type="text/javascript">
+    var chart_json = {{ chart_json | safe }};
+    vegaEmbed('#chart', chart_json);
+</script>
+{% endblock %}

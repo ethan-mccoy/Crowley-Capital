@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Markets</h2>
+<ul>
+    {% for market in markets %}
+    <li>
+        <a href="{{ url_for('market_detail', market_id=market['market_id']) }}">{{ market['name'] }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
